@@ -13,6 +13,7 @@ export default () => {
                     <Route exact path="/pricing"
                         component={Pricing} />
                     <Route path="/" component={Landing} />
+                    <Route path="/log" />
                 </Switch>
             </BrowserRouter>
         </StylesProvider>
