@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: deploy-container
+name: deploy-marketing
 
 # Controls when the action will run. 
 on:
@@ -11,12 +11,12 @@ on:
       - main
     paths:
       # only run this workflow when we make a change to something inside
-      - 'packages/container/**'
+      - 'packages/marketing/**'
 
 # set the execution environment to inside of the container directory
 defaults:
   run:
-    working-directory: packages/container
+    working-directory: packages/marketing
 
 # actual jobs
 jobs:
@@ -28,18 +28,16 @@ jobs:
       - uses: actions/checkout@v2
       - run: npm install
       - run: npm run build
-        # environment variable
-        PRODUCTION_DOMAIN: $ {{ secrets.PRODUCTION_DOMAIN }}
       
       - uses: shinyinc/action-aws-cli@v1.2
       # dist (after bulid)
-      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest
+      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/marketing/latest
         env: 
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       # create invalidation automatically
-      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths "/container/latest/index.html"
+      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths "/marketing/latest/index.html"
         env: 
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
