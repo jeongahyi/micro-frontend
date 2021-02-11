@@ -29,7 +29,8 @@ jobs:
       - run: npm install
       - run: npm run build
         # environment variable
-        PRODUCTION_DOMAIN: $ {{ secrets.PRODUCTION_DOMAIN }}
+        env:
+          PRODUCTION_DOMAIN: $ {{ secrets.PRODUCTION_DOMAIN }}
       
       - uses: shinyinc/action-aws-cli@v1.2
       # dist (after bulid)
