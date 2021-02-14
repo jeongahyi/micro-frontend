@@ -9,10 +9,10 @@ import Pricing from './components/Pricing';
 // prefix with 'ma'
 const generateClassName = createGenerateClassName({
     productionPrefix: 'ma',
-})
+});
 
 export default () => {
-    return <div>
+    return (
         <BrowserRouter>
             <StylesProvider generateClassName={generateClassName}>
                 <Switch>
@@ -23,5 +23,5 @@ export default () => {
                 </Switch>
             </StylesProvider>
         </BrowserRouter>
-    </div>
+    );
 };
