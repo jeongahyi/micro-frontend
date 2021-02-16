@@ -4,8 +4,10 @@ import { createMemoryHistory, createBrowserHistory } from 'history';
 import App from './App';
 
 // Mount function to start up the app
-const mount = (el, { onNavigate, defaultHistory }) => {
-    const history = defaultHistory || createMemoryHistory();
+const mount = (el, { onNavigate, defaultHistory, initialPath }) => {
+    const history = defaultHistory || createMemoryHistory({
+        initialEntries: [initialPath]
+    });
 
     if (onNavigate) {
         history.listen(onNavigate);
@@ -16,11 +18,9 @@ const mount = (el, { onNavigate, defaultHistory }) => {
     return {
         onParentNavigate({ pathname: nextPathname }) {
             const { pathname } = history.location;
-
             if (pathname !== nextPathname) {
                 history.push(nextPathname);
             }
-            console.log(location);
         }
     };
 };
